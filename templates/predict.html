@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Prediction</title>
+    <style>
+        /* Body styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+        }
+
+        /* Container styling */
+        form {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        /* Form heading */
+        h1 {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Label styling */
+        form label {
+            font-size: 1em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        /* Input and select styling */
+        form input,
+        form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            background: #f9f9f9;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* Focus and hover effects for inputs and select */
+        form input:focus,
+        form select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+        }
+
+        /* Radio button styling */
+        form input[type="radio"] {
+            display: inline-block;
+            width: auto;
+            margin: 0 10px 0 0;
+        }
+
+        /* Button styling */
+        form button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Button hover effect */
+        form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #0056b3, #004085);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            form {
+                padding: 20px;
+                font-size: 0.9em;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+
+        .radio-group {
+            display: inline-flex;
+            gap: 20px;
+            /* Space between Yes/No options */
+            align-items: center;
+        }
+
+        .radio-group input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #0a9ecf;
+            display: flex;
+            justify-content: center;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: inline-block;
+        }
+
+        .navbar a:hover {
+            background-color: #007bb5;
+        }
+
+        /* Adjust layout below navbar */
+        body {
+            margin-top: 60px; /* To avoid the form being covered by navbar */
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="/home">Home</a>
+        <a href="/health-tips">Health Tips</a>
+        <a href="/bmical">BMI Calculator</a>
+    </div>
+
+    <form method="POST" action="/predict">
+        <h1>Heart Stroke Assessment</h1>
+        <label for="gender">Gender:</label>
+        <select name="gender" id="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <label for="age">Age:</label>
+        <input type="number" name="age" id="age" min="1" max="120" required />
+
+
+        <!-- Hypertension Field -->
+        <div class="form-group">
+            <label>Are You Have Hypertension?</label>
+            <div class="radio-group">
+                <input type="radio" name="hypertension" id="hypertension_yes" value="1" required />
+                <label for="hypertension_yes">Yes</label>
+
+                <input type="radio" name="hypertension" id="hypertension_no" value="0" required />
+                <label for="hypertension_no">No</label>
+            </div>
+        </div>
+
+        <!-- Heart Disease Field -->
+        <div class="form-group">
+            <label>Are You Have Any Heart Disease ?</label>
+            <div class="radio-group">
+                <input type="radio" name="heart_disease" id="heart_disease_yes" value="1" required />
+                <label for="heart_disease_yes">Yes</label>
+
+                <input type="radio" name="heart_disease" id="heart_disease_no" value="0" required />
+                <label for="heart_disease_no">No</label>
+            </div>
+        </div>
+
+        <label for="ever_married">Are You Married ?  :</label>
+        <select name="ever_married" id="ever_married" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <label for="work_type">Work Type:</label>
+        <select name="work_type" id="work_type" required>
+            <option value="Private">Private</option>
+            <option value="Self-employed">Self-employed</option>
+            <option value="Government">Government</option>
+            <option value="Never_worked">Never worked</option>
+            <option value="Children">Children</option>
+        </select>
+
+        <label for="Residence_type">Residence Type:</label>
+        <select name="Residence_type" id="Residence_type" required>
+            <option value="Urban">Urban</option>
+            <option value="Rural">Rural</option>
+        </select>
+
+        <label for="avg_glucose_level">Average Glucose Level :</label>
+        <input type="number" name="avg_glucose_level" id="avg_glucose_level" min="50" max="600" step="0.1" required />
+        
+        <label for="bmi">BMI:</label>
+        <input type="number" name="bmi" id="bmi" min="10" max="60" step="0.1" required />
+        
+
+        <label for="smoking_status">Smoking Status:</label>
+        <select name="smoking_status" id="smoking_status" required>
+            <option value="formerly smoked">Formerly smoked</option>
+            <option value="never smoked">Never smoked</option>
+            <option value="smokes">Smokes</option>
+            <option value="Unknown">Unknown</option>
+        </select>
+
+        <button type="submit">Predict</button>
+    </form>
+</body>
+
+</html> 

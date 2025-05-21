@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Heart Disease Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #0088a6;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 18px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(149, 39, 227, 0.2);
+            color: #95a3e3;
+            background-color: #560792;
+        }
+
+        .navbar a:last-child {
+            float: right;
+        }
+
+        /* Website Name Styling */
+        .site-title {
+            margin-top: 70px;
+            font-size: 3em;
+            font-weight: bold;
+            color: #0d8da7;
+            text-align: center;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+            animation: float 3s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Hero Section Styling */
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+           /*  background: url('{{ url_for("static", filename="images/heartbeat.jpg") }}') no-repeat center center/cover; */
+           background-color: #52dfff;
+            color: white;
+            margin-top: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero h1, .hero p, .hero button {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            color: #f5f7fa;
+        }
+
+        .hero p {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .hero button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            background-color: #af3feb;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1), 0 6px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .hero button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2), 0 5px 30px rgba(0, 0, 0, 0.15);
+            background-color: #005f77;
+        }
+
+        /* Features Section Styling */
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 50px 20px;
+            /*background: url('{{ url_for("static", filename="images/heartbat.jpg") }}') no-repeat center center/cover; */
+            background-color: navajowhite;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex: 1;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-card h2 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #0088a6;
+        }
+
+        .feature-card p {
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        /* Footer Styling */
+        .footer {
+            background-color: #0088a6;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .footer a {
+            color: #f2f2f2;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: rgb(90, 164, 17);
+        }
+
+        .footer p {
+            margin: 10px 0 0;
+            font-size: 0.9em;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .navbar a {
+                padding: 12px 14px;
+                font-size: 1em;
+            }
+
+            .hero {
+                padding: 50px 20px;
+            }
+
+            .features {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="/health-tips">Health Tips</a>
+        <a href="/predict">Heart Stroke Predict</a>
+        <a href="/heartpredict">Heart Attack Predict</a>
+        <a href="/bmical">BMI Calculator</a>
+        <a href="/feedback">Feedback</a>
+        <a href="/about">About</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <!-- Website Name -->
+    <div class="site-title">
+        Multi-Heart Disease Predictor
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Welcome, {{ username }}!</h1>
+        <p>Predict heart diseases early and stay informed about your health.</p>
+        <button onclick="window.location.href='/predict'">Start Now</button>
+    </div>
+
+    <!-- Features Section -->
+     
+    <div class="features">
+        <a href="/heartpredict">
+        <div class="feature-card">
+            <h2>Heart Attack Prediction</h2></a>
+            <p>Analyze key health metrics to predict the risk of a heart attack.</p>
+        </div>
+    
+    <a href="/predict">
+        <div class="feature-card">
+            <h2>Heart Stroke Prediction</h2></a>
+            <p>Use advanced models to predict the likelihood of a stroke.</p>
+        </div>
+        
+        <a href="/bmical">
+        <div class="feature-card">
+            <h2>BMI Calculator</h2></a>
+            <p>Maintain a healthy lifestyle by tracking your BMI easily.</p>
+        </div>
+    
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 SKHEGDE. All Rights Reserved. | Privacy Policy | Terms of Service</p>
+    </div>
+</body>
+
+</html>

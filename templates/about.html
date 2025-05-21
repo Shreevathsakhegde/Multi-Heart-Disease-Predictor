@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Shreevathsa K Hegde</title>
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg,rgb(132, 1, 149), #feb47b);
+            color: white;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            background: rgba(10, 248, 244, 0.58);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover {
+            color: #ffefba;
+        }
+
+        /* 3D About page container */
+        .about-container {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            margin-top: 100px; /* To avoid navbar overlap */
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            transform: perspective(1000px) rotateX(1deg);
+            animation: fadeIn 1s ease;
+        }
+
+        /* Heading styles */
+        h1 {
+            font-size: 3em;
+            letter-spacing: 2px;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+            margin-bottom: 20px;
+            background: linear-gradient(135deg,rgba(8, 177, 207, 0.99),rgb(231, 222, 226));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Paragraph styles */
+        p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #ffffff;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #ffefba;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        /* 3D Button */
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg,rgb(224, 10, 243), #185a9d);
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, #185a9d, #43cea2);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: perspective(1000px) rotateX(-10deg);
+            }
+            to {
+                opacity: 1;
+                transform: perspective(1000px) rotateX(1deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="links">
+            <a href="/health-tips">Health Tips</a>
+            
+        </div>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="about-container">
+        <h1>About Shreevathsa K Hegde</h1>
+        <p>
+            Welcome! I am <span class="highlight">Shreevathsa K Hegde</span>, a tech enthusiast dedicated to creating innovative solutions.
+            My expertise lies in developing cutting-edge web applications using modern technologies like <span class="highlight">React</span>, <span class="highlight">Django</span>, and more.
+        </p>
+        <p>
+            I aim to transform challenges into opportunities by crafting intuitive user experiences and leveraging the power of technology to make lives better.
+            Explore my projects and let's shape the future together!
+        </p>
+        <a href="/home" class="back-link">Back to Home</a>
+    </div>
+
+</body>
+</html>

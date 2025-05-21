@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <style>
+        /* Body styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: white;
+        }
+
+        /* Main container styling */
+        .container {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            
+            transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+        }
+
+        .container:hover {
+            transform: perspective(1800px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Form heading */
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Input field and label styling */
+        label {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.1em;
+            background-color: #f7f7f7;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #0072ff;
+            box-shadow: 0 0 10px rgba(0, 114, 255, 0.6);
+        }
+
+        /* Button styling */
+        button {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #0072ff, #00c6ff);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Result styling */
+        .result {
+            text-align: center;
+            font-size: 1.5em;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .normal {
+            color: #28a745;
+            background-color: #d4edda;
+        }
+
+        .abnormal {
+            color: #dc3545;
+            background-color: #f8d7da;
+        }
+
+        /* Link styling */
+        a {
+            display: inline-block;
+            text-align: center;
+            font-size: 1em;
+            margin-top: 30px;
+            color: #0072ff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #005bb5;
+            text-decoration: underline;
+        }
+
+        .error {
+            color: red;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BMI Calculator</h1>
+        <form method="POST" onsubmit="return validateForm()">
+            <label for="weight">Weight (kg):</label>
+            <input type="number" step="0.1" id="weight" name="weight" required>
+            <div id="weight-error" class="error"></div>
+            <label for="height">Height (cm):</label>
+            <input type="number" step="0.1" id="height" name="height" required>
+            <div id="height-error" class="error"></div>
+            <button type="submit">Calculate BMI</button>
+        </form>
+        {% if bmi_result %}
+            <div id="bmiMessage" class="result {% if 'normal' in message %}normal{% else %}abnormal{% endif %}">
+                {{ bmi_result }}<br>{{ message }}
+            </div>
+        {% endif %}
+        <a href="{{ url_for('home') }}">Back to Home</a>
+    </div>
+
+    <script>
+        // Validate form data before submitting
+        function validateForm() {
+            let weight = parseFloat(document.getElementById("weight").value);
+            let height_cm = parseFloat(document.getElementById("height").value);
+            let weightError = document.getElementById("weight-error");
+            let heightError = document.getElementById("height-error");
+            let isValid = true;
+
+            // Weight validation
+            if (weight <= 0 || weight > 500) {
+                weightError.textContent = "Weight must be between 1 and 500 kg.";
+                isValid = false;
+            } else {
+                weightError.textContent = ""; // Clear previous error
+            }
+
+            // Height validation (height is in cm)
+            if (height_cm < 50 || height_cm > 300) {
+                heightError.textContent = "Height must be between 50 cm and 300 cm.";
+                isValid = false;
+            } else {
+                heightError.textContent = ""; // Clear previous error
+            }
+
+            return isValid;
+        }
+
+        // Automatically hide the BMI message after 10 seconds
+        window.onload = function() {
+            const bmiMessage = document.getElementById('bmiMessage');
+            if (bmiMessage) {
+                setTimeout(() => {
+                    bmiMessage.style.display = 'none';
+                }, 10000);
+            }
+        };
+    </script>
+</body>
+</html>

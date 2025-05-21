@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Risk Assessment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #0a9ecf;
+            display: flex;
+            justify-content: center;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: inline-block;
+        }
+
+        .navbar a:hover {
+            background-color: #007bb5;
+        }
+
+        /* Form Styles */
+        form {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            margin-top: 80px; /* Prevents overlap with navbar */
+        }
+
+        h1 {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            font-size: 1em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            background: #f9f9f9;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #0056b3, #004085);
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                margin-top: 10px;
+            }
+
+            form {
+                padding: 20px;
+                font-size: 0.9em;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="/home">Home</a>
+        <a href="/health-tips">Health Tips</a>
+        <a href="/bmical">BMI Calculator</a>
+    </div>
+
+    <!-- Form -->
+    <form action="{{ url_for('heartpredict') }}" method="POST">
+        <h1>Heart Attack Assessment</h1>
+
+        <label for="male">Gender:</label>
+        <select name="male" id="male" required>
+            <option value="1">Male</option>
+            <option value="0">Female</option>
+        </select>
+
+        <label for="age">Age:</label>
+        <input type="number" name="age" id="age" min="1" max="120" required />
+
+
+        <label for="currentSmoker">Are you a Smoker:</label>
+        <select name="currentSmoker" id="currentSmoker" required>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+
+        <label for="cigsPerDay">Cigarettes per Day:</label>
+        <input type="number" name="cigsPerDay" id="cigsPerDay" min="0" max="60" step="1" required />
+
+
+        <label for="BPMeds">Are You Taken Any BP Medications?</label>
+        <select name="BPMeds" id="BPMeds" required>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+
+        <label for="prevalentStroke">Are You Have Stroke before?</label>
+        <select name="prevalentStroke" id="prevalentStroke" required>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+
+        <label for="prevalentHyp">Are You Have Hypertension?</label>
+        <select name="prevalentHyp" id="prevalentHyp" required>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+
+        <label for="diabetes">Are You Have Diabetes?</label>
+        <select name="diabetes" id="diabetes" required>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        <label for="totChol">Total Cholesterol :</label>
+        <input type="number" name="totChol" id="totChol" min="0" max="400" step="0.1" required />
+        
+        <label for="sysBP">Systolic BP :</label>
+        <input type="number" name="sysBP" id="sysBP" min="50" max="250" step="0.1" required />
+        
+        <label for="diaBP">Diastolic BP :</label>
+        <input type="number" name="diaBP" id="diaBP" min="30" max="150" step="0.1" required />
+        
+        <label for="BMI">BMI:</label>
+        <input type="number" name="BMI" id="BMI" min="10" max="60" step="0.1" required />
+        
+        <label for="heartRate">Heart Rate :</label>
+        <input type="number" name="heartRate" id="heartRate" min="40" max="200" step="1" required />
+        
+        <label for="glucose">Glucose Level :</label>
+        <input type="number" name="glucose" id="glucose" min="50" max="600" step="0.1" required />
+        
+
+       
+
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+
+</html>

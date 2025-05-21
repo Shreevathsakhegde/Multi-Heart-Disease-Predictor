@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form method="POST" onsubmit="return validateForm()">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" placeholder="Enter your username" required oninput="validateUsername()">
+    <div id="username-error" class="error"></div>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+    <button type="submit">Login</button>
+</form>
+
+<p>Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+
+<script>
+function validateForm() {
+    let username = document.getElementById("username").value;
+    let usernameError = document.getElementById("username-error");
+
+    // Perform validation for username on form submit
+    if (/[^a-zA-Z]/.test(username)) {
+        usernameError.textContent = "Username must contain only letters.";
+        return false; // Prevent form submission
+    } else {
+        usernameError.textContent = ""; // Clear any previous error
+    }
+
+    return true; // Allow form submission
+}
+
+// Real-time username validation as the user types
+function validateUsername() {
+    let username = document.getElementById("username").value;
+    let usernameError = document.getElementById("username-error");
+
+    // Check if username contains non-alphabetical characters
+    if (/[^a-zA-Z]/.test(username)) {
+        usernameError.textContent = "Username must contain only letters.";
+    } else {
+        usernameError.textContent = ""; // Clear error if the input is valid
+    }
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form method="POST" onsubmit="return validateForm()">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" placeholder="Create a username" required oninput="validateUsername()">
+    <div id="username-error" class="error"></div>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" placeholder="Create a password" required onkeyup="checkPasswordStrength()">
+    <div id="password-error" class="error"></div>
+    <div id="password-strength"></div>
+    <button type="submit">Register</button>
+</form>
+<p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+
+<script>
+function validateForm() {
+    let username = document.getElementById("username").value;
+    let usernameError = document.getElementById("username-error");
+    let passwordError = document.getElementById("password-error");
+    let password = document.getElementById("password").value;
+
+    if (/[^a-zA-Z]/.test(username)) {
+        usernameError.textContent = "Username must contain only letters.";
+        return false;
+    } else {
+        usernameError.textContent = "";
+    }
+
+    if (password.length < 8) {
+        passwordError.textContent = "Password must be at least 8 characters long.";
+        return false;
+    } else if (!/[a-z]/.test(password)) {
+        passwordError.textContent = "Password must contain at least one lowercase letter.";
+        return false;
+    } else if (!/[A-Z]/.test(password)) {
+        passwordError.textContent = "Password must contain at least one uppercase letter.";
+        return false;
+    } else if (!/[0-9]/.test(password)) {
+        passwordError.textContent = "Password must contain at least one number.";
+        return false;
+    } else if (!/[^a-zA-Z0-9]/.test(password)) {
+        passwordError.textContent = "Password must contain at least one special character.";
+        return false;
+    } else {
+        passwordError.textContent = "";
+    }
+
+    return true;
+}
+
+function checkPasswordStrength() {
+    let password = document.getElementById("password").value;
+    let strengthDiv = document.getElementById("password-strength");
+    let strength = 0;
+
+    if (password.length >= 8) {
+        strength++;
+    }
+    if (/[a-z]/.test(password)) {
+        strength++;
+    }
+    if (/[A-Z]/.test(password)) {
+        strength++;
+    }
+    if (/[0-9]/.test(password)) {
+        strength++;
+    }
+    if (/[^a-zA-Z0-9]/.test(password)) {
+        strength++;
+    }
+
+    let strengthText = "";
+    let strengthColor = "";
+
+    if (strength < 3) {
+        strengthText = "Weak";
+        strengthColor = "red";
+    } else if (strength < 4) {
+        strengthText = "Moderate";
+        strengthColor = "orange";
+    } else {
+        strengthText = "Strong";
+        strengthColor = "green";
+    }
+
+    strengthDiv.textContent = "Password Strength: " + strengthText;
+    strengthDiv.style.color = strengthColor;
+}
+
+// New function to validate username on input
+function validateUsername() {
+    let username = document.getElementById("username").value;
+    let usernameError = document.getElementById("username-error");
+
+    if (/[^a-zA-Z]/.test(username)) {
+        usernameError.textContent = "Username must contain only letters.";
+    } else {
+        usernameError.textContent = "";
+    }
+}
+</script>
+
+{% endblock %}
